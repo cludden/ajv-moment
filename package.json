@@ -1,6 +1,6 @@
 {
   "name": "ajv-moment",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "date validation for ajv",
   "main": "index.js",
   "scripts": {
@@ -14,8 +14,8 @@
   "author": "chris ludden",
   "license": "MIT",
   "type": {
-      "type": "git",
-      "repository": "https://github.com/cludden/ajv-moment.git"
+    "type": "git",
+    "repository": "https://github.com/cludden/ajv-moment.git"
   },
   "dependencies": {
     "dot": "^1.0.3",
