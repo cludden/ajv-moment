@@ -13,9 +13,9 @@
   ],
   "author": "chris ludden",
   "license": "MIT",
-  "type": {
+  "repository": {
     "type": "git",
-    "repository": "https://github.com/cludden/ajv-moment.git"
+    "url": "https://github.com/cludden/ajv-moment.git"
   },
   "dependencies": {
     "dot": "^1.0.3",
