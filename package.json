@@ -17,16 +17,12 @@
     "type": "git",
     "url": "https://github.com/cludden/ajv-moment.git"
   },
-  "dependencies": {
-    "dot": "^1.0.3",
-    "js-beautify": "^1.6.3",
-    "json-pointer": "^0.5.0",
-    "lodash": "^4.13.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "ajv": "^4.1.7",
     "chai": "^3.5.0",
     "eslint": "^3.1.0",
+    "lodash": "^4.13.1",
     "mocha": "^2.5.3",
     "moment": "^2.14.1",
     "sinon": "^1.17.4"
