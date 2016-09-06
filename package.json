@@ -2,9 +2,12 @@
   "name": "ajv-moment",
   "version": "1.0.1",
   "description": "date validation for ajv",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "mocha test/index.test.js"
+    "build": "babel lib -d dist",
+    "coverage": "./node_modules/.bin/babel-node ./node_modules/.bin/babel-istanbul cover tape test/tests/**/*.test.js",
+    "postversion": "npm run build",
+    "test": "mocha --compilers js:babel-register test/index.test.js"
   },
   "keywords": [
     "ajv",
@@ -20,6 +23,13 @@
   "dependencies": {},
   "devDependencies": {
     "ajv": "^4.1.7",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-istanbul": "^0.11.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-register": "^6.14.0",
+    "babel-tape-runner": "^2.0.1",
     "chai": "^3.5.0",
     "eslint": "^3.1.0",
     "lodash": "^4.13.1",

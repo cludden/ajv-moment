@@ -1,19 +1,17 @@
 'use strict';
 
-
-const Ajv = require('ajv');
-const AjvMoment = require('../lib');
-const expect = require('chai').expect;
-const moment = require('moment');
-const _ = require('lodash');
+import Ajv from 'ajv';
+import * as AjvMoment from '../lib';
+import { expect } from 'chai';
+import moment from 'moment';
+import _ from 'lodash';
 
 describe('ajv-dates', function() {
     const now = moment();
-    const ajvMoment = new AjvMoment();
-    const ajv = new Ajv({ passContext: true });
+    const ajv = new Ajv();
 
     before(function() {
-        ajvMoment.plugin(ajv);
+        AjvMoment.plugin({ ajv, moment });
     });
 
     const schemas = [{
