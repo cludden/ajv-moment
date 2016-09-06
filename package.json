@@ -1,6 +1,6 @@
 {
   "name": "ajv-moment",
-  "version": "1.0.1",
+  "version": "2.0.0-0",
   "description": "date validation for ajv",
   "main": "./dist/index.js",
   "scripts": {
