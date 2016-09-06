@@ -11,22 +11,16 @@ npm install --save ajv moment ajv-moment
 
 
 ## Getting Started
-A few things to keep in mind, this plugin relies on [moment.js](https://github.com/moment/moment/) for date validation. In order to take advantage of moment.js with ajv, two things need to happen. First, the ajv instance responsible for compiling/validating schemas must be instantiated with the `passContext` flag enabled. Second, validation calls must be bound to an object that contains a reference to moment.js. This is for two reasons:
-
-1. It allows us to avoid requiring moment.js to be present in the global namespace.
-2. It allows you, the user, to include additional context data for use in other ajv plugins.
-
 ```javascript
-const Ajv = require('ajv');
-const AjvMoment = require('ajv-moment');
-const moment = require('moment');
+import Ajv from 'ajv'
+import { plugin } from 'ajv-moment'
+import moment from 'moment'
 
-// define an ajv instance with the 'passContext' flag enabled
-const ajv = new Ajv({ passContext: true });
+// define an ajv instance
+const ajv = new Ajv();
 
 // install the plugin. by default, this plugin utilizes the "moment" custom keyword
-const ajvMoment = new AjvMoment();
-ajvMoment.plugin(ajv);
+plugin({ ajv, moment });
 
 // define your schemas using the "moment" keyword
 // here we define a schema for an object with two keys (assigned & due)
@@ -60,19 +54,16 @@ const schema = {
     ]
 }
 
-// compile your schema using ajv and call it bound to an object that contains
-// a reference to moment.
-const ctx = { moment };
+// compile your schema using ajv
 const validate = ajv.compile(schema);
 
-
-validate.call(ctx, {
+validate({
     assigned: new Date().toISOString(),
     due: moment().add(24, 'hours').toISOString()
 });
 // false
 
-validate.call(ctx, {
+validate({
     assigned: new Date().toISOString(),
     due: moment().add(1, 'weeks').toISOString()
 });
