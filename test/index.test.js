@@ -6,11 +6,11 @@ import { expect } from 'chai';
 import moment from 'moment';
 import _ from 'lodash';
 
-describe('ajv-dates', function() {
+describe('ajv-dates', function () {
     const now = moment();
     const ajv = new Ajv();
 
-    before(function() {
+    before(function () {
         AjvMoment.plugin({ ajv, moment });
     });
 
@@ -23,11 +23,11 @@ describe('ajv-dates', function() {
         tests: [{
             data: new Date().toISOString(),
             result: true
-        },{
+        }, {
             data: 'hello',
             result: false
         }]
-    },{
+    }, {
         name: 'custom-format',
         schema: {
             type: 'string',
@@ -38,11 +38,11 @@ describe('ajv-dates', function() {
         tests: [{
             data: '12-01-2010',
             result: true
-        },{
+        }, {
             data: '12/1/2010',
             result: false
         }]
-    },{
+    }, {
         name: 'isBefore',
         schema: {
             type: 'object',
@@ -70,14 +70,14 @@ describe('ajv-dates', function() {
                 finish: new Date().toISOString()
             },
             result: true
-        },{
+        }, {
             data: {
                 start: moment('10/31/2010', 'MM/DD/YYYY').add(1, 'milliseconds').toISOString(),
                 finish: moment('10/31/2010', 'MM/DD/YYYY').subtract(1, 'milliseconds').toISOString()
             },
             result: false
         }]
-    },{
+    }, {
         name: 'isAfter',
         schema: {
             type: 'object',
@@ -106,10 +106,10 @@ describe('ajv-dates', function() {
         tests: [{
             data: {
                 created: moment().subtract(1, 'weeks').toISOString(),
-                due:  new Date().toISOString()
+                due: new Date().toISOString()
             },
             result: true
-        },{
+        }, {
             data: {
                 created: moment().subtract(30, 'minutes').toISOString(),
                 due: new Date().toISOString()
@@ -117,7 +117,7 @@ describe('ajv-dates', function() {
             result: false
         }]
 
-    },{
+    }, {
         name: 'isSameOrAfter',
         schema: {
             type: 'object',
@@ -156,7 +156,7 @@ describe('ajv-dates', function() {
                 due: moment().add(1, 'weeks').endOf('day').toISOString()
             },
             result: true
-        },{
+        }, {
             data: {
                 nested: {
                     created: new Date().toISOString()
@@ -164,7 +164,7 @@ describe('ajv-dates', function() {
                 due: moment().add(2, 'weeks').toISOString()
             },
             result: true
-        },{
+        }, {
             data: {
                 nested: {
                     created: new Date().toISOString()
@@ -173,7 +173,7 @@ describe('ajv-dates', function() {
             },
             result: false
         }]
-    },{
+    }, {
         name: 'isBetween',
         schema: {
             type: 'object',
@@ -192,7 +192,7 @@ describe('ajv-dates', function() {
                                 manipulate: [
                                     { add: [1, 'hours'] }
                                 ]
-                            },{
+                            }, {
                                 $data: '1/finish',
                                 manipulate: [
                                     { subtract: [1, 'hours'] }
@@ -224,21 +224,21 @@ describe('ajv-dates', function() {
                 finish: moment().add(2, 'days').toISOString()
             },
             result: true
-        },{
+        }, {
             data: {
                 start: new Date().toISOString(),
                 middle: moment().add(2, 'days').subtract(1, 'hours').subtract(1, 'seconds').toISOString(),
                 finish: moment().add(2, 'days').toISOString()
             },
             result: true
-        },{
+        }, {
             data: {
                 start: new Date().toISOString(),
                 middle: moment().add(1, 'hours').subtract(1, 'milliseconds').toISOString(),
                 finish: moment().add(2, 'days').toISOString()
             },
             result: false
-        },{
+        }, {
             data: {
                 start: new Date().toISOString(),
                 middle: moment().add(47, 'hours').add(1, 'milliseconds').toISOString(),
@@ -246,7 +246,7 @@ describe('ajv-dates', function() {
             },
             result: false
         }]
-    },{
+    }, {
         name: 'complex',
         schema: {
             type: 'object',
@@ -262,15 +262,15 @@ describe('ajv-dates', function() {
                             test: 'isBetween',
                             value: [{
                                 $data: '1/first'
-                            },{
+                            }, {
                                 $data: '1/second'
                             }]
-                        },{
+                        }, {
                             test: 'isSameOrBefore',
                             value: {
                                 $data: '1/second',
                                 manipulate: [
-                                    { subtract: [15, 'seconds' ] }
+                                    { subtract: [15, 'seconds'] }
                                 ]
                             }
                         }]
@@ -314,7 +314,7 @@ describe('ajv-dates', function() {
                 third: now.clone().add(30, 'minutes').add(1, 'milliseconds').toISOString()
             },
             result: true
-        },{
+        }, {
             data: {
                 first: now.toISOString(),
                 breakpoint: now.clone().add(29, 'minutes').add(45, 'seconds').subtract(1, 'milliseconds').toISOString(),
@@ -323,15 +323,45 @@ describe('ajv-dates', function() {
             },
             result: false
         }]
+    }, {
+        name: 'now',
+        schema: {
+            type: 'object',
+            properties: {
+                d: {
+                    type: 'string',
+                    moment: {
+                        format: ['YYYY-MM-DD HH:mm'],
+                        validate: [{
+                            test: 'isSameOrAfter',
+                            value: {
+                                now: true
+                            }
+                        }]
+                    }
+                }
+            }
+        },
+        tests: [{
+            result: true,
+            data: {
+                d: moment().add(24, 'hours').format('YYYY-MM-DD HH:mm'),
+            }
+        }, {
+            result: false,
+            data: {
+                d: moment().subtract(24, 'hours').format('YYYY-MM-DD HH:mm'),
+            }
+        }]
     }];
 
-    schemas.forEach(function(schema) {
-        schema.tests.forEach(function(test, ii) {
+    schemas.forEach(function (schema) {
+        schema.tests.forEach(function (test, ii) {
             const outcome = test.result === true ? 'pass' : 'fail';
-            it(`should ${outcome} validation (${schema.name}, test ${ii})`, function() {
+            it(`should ${outcome} validation (${schema.name}, test ${ii})`, function () {
                 const momentify = { moment };
                 const validate = ajv.compile(schema.schema);
-                const e = _.attempt(function() {
+                const e = _.attempt(function () {
                     expect(validate.call(momentify, test.data)).to.equal(test.result);
                 });
                 if (_.isError(e)) {
