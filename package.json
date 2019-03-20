@@ -1,5 +1,5 @@
 {
-  "name": "ajv-moment",
+  "name": "ajv-moment-bf",
   "version": "2.0.2",
   "description": "robust date validation for ajv",
   "main": "./dist/index.js",
@@ -18,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cludden/ajv-moment.git"
+    "url": "https://github.com/bfeister/ajv-moment.git"
   },
   "dependencies": {},
   "devDependencies": {
