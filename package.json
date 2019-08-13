@@ -20,6 +20,7 @@
     "type": "git",
     "url": "https://github.com/cludden/ajv-moment.git"
   },
+  "types": "index.d.ts",
   "dependencies": {},
   "devDependencies": {
     "ajv": "^4.1.7",
