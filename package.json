@@ -7,6 +7,7 @@
     "build": "babel lib -d dist",
     "coverage": "./node_modules/.bin/babel-node ./node_modules/.bin/babel-istanbul cover tape test/tests/**/*.test.js",
     "postversion": "npm run build",
+    "release": "standard-version",
     "test": "mocha --compilers js:babel-register test/index.test.js"
   },
   "keywords": [
@@ -36,6 +37,7 @@
     "lodash": "^4.17.15",
     "mocha": "^2.5.3",
     "moment": "^2.14.1",
-    "sinon": "^1.17.4"
+    "sinon": "^1.17.4",
+    "standard-version": "^7.1.0"
   }
 }
