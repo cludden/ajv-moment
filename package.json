@@ -38,6 +38,6 @@
     "mocha": "^2.5.3",
     "moment": "^2.14.1",
     "sinon": "^1.17.4",
-    "standard-version": "^7.1.0"
+    "standard-version": "^8.0.1"
   }
 }
